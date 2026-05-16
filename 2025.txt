@@ -82,7 +82,9 @@ https://www.photopea.com/
 
 
 
+Breeze zet in resources/js/app.js standaard:
 
+import './bootstrap';
 
 
 
