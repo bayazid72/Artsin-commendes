@@ -1,0 +1,165 @@
+1.composer install
+
+2.npm install
+
+3.cp .env.example .env
+
+4.php artisan key:generate
+ 
+5.npm run dev
+
+5.npm run build   
+
+waarbij ik gebruikmaak van een Blade component in Laravel (zoals <x-base-layout>), valt onder Blade templating of Blade component-based layout. Dit is een techniek in Laravel waarmee je herbruikbare componenten en layouts kunt maken.
+
+Dit onderwerp, kun je bijvoorbeeld vragen naar:
+
+Blade templating
+Component-based layouts in Laravel
+Blade components in Laravel
+Het gebruik van layouts en sections in Laravel
+
+
+
+1.composer require laravel/breeze --dev
+ 
+2.php artisan breeze:install
+ 
+3.blade
+ 
+4.yes
+ 
+5.enter
+
+php artisan migrate
+
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypas
+
+php artisan make:model Reminder -mfc 
+php artisan make:migration create_trade_items_table 
+
+php artisan make:controller OfferController 
+
+php artisan db:seed 
+
+php artisan migrate:fresh --seed
+
+php artisan migrate:fresh
+
+php artisan storage:link     
+
+php artisan view:clear 
+
+php artisan optimize:clear
+
+php artisan cache:clear 
+
+php artisan route:clear                                                              
+
+php artisan view:cache
+
+php artisan route:cache 
+
+php artisan config:cache   
+   
+composer require livewire/livewire:^3.6
+
+php artisan make:livewire Inventory
+
+
+Wierfram 
+
+https://excalidraw.com/
+https://wireframe.cc/
+https://www.tldraw.com/
+
+ERD
+
+https://www.template.net/
+https://www.photopea.com/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-20">
+
+        <!-- LOGO -->
+        <h1>
+           <a href="/" class="block">
+                <img src="{{ asset('images/logo.png') }}"
+                    alt="Logo"
+                    width="220"
+                    height="70"
+                    class="object-contain">
+            </a>
+
+        </h1>
+
+
+        <!-- HAMBURGER -->
+        <button id="menuBtn" class="md:hidden">
+            <svg class="w-11 h-11" fill="none" stroke="black" stroke-width="2"
+                 viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+
+        <!-- DESKTOP MENU -->
+        <div class="hidden md:flex items-center gap-6">
+
+            <a href="/homepage" class="hover:text-teal-300 transition">Home</a>
+            <a href="/projects" class="hover:text-teal-300 transition">Projecten</a>
+
+            <!-- Desktop dropdown -->
+            <div class="relative group">
+                <a href="#" class="hover:text-teal-300 transition flex items-center gap-1">
+                    Diensten
+                    <svg class="w-4 h-4 mt-[2px]" fill="none" stroke="currentColor" stroke-width="2"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </a>
+
+                <div class="absolute left-0 top-full pt-3 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
+                    <div class="bg-white text-black rounded-xl shadow-lg overflow-hidden">
+                        <a href="/websites" class="block px-5 py-3 hover:bg-gray-100">Website bouwen</a>
+                        <a href="/webshop" class="block px-5 py-3 hover:bg-gray-100">Webshop</a>
+                        <a href="/webapp" class="block px-5 py-3 hover:bg-gray-100">Webapplicatie</a>
+                    </div>
+                </div>
+            </div>
+
+            <a href="/contact" class="hover:text-teal-300 transition">Contact</a>
+
+            @auth
+                @if(auth()->user()->is_admin)
+                    <a href="{{ route('admin.projects.create') }}"
+                       class="bg-teal-600 px-4 py-2 rounded hover:bg-teal-700 transition">
+                        Nieuw project
+                    </a>
+                @endif
+
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button class="hover:text-teal-300 transition">Logout</button>
+                </form>
+            @else
+                <!-- <a href="{{ route('login') }}" class="hover:text-teal-300 transition">
+                    Login
+                </a>-->
+            @endauth
+        </div>
+    </div>
