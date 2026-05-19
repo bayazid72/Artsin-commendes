@@ -273,5 +273,10 @@ Gebruik het formaat:
 Voeg acceptatiecriteria en prioriteit toe.
 Maak meerdere stories waar nodig.
 
+app\Http\Controllers\Admin
+app\Http\Middleware\AdminMiddleware.php
+mudi\bootstrap\app.php
+database\seeders
+
 Opdracht:
 [tekst]
