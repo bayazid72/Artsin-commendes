@@ -274,7 +274,91 @@ Voeg acceptatiecriteria en prioriteit toe.
 Maak meerdere stories waar nodig.
 
 
-public function index()
-    {
-        return view('invoerder.dashboard');
+@extends('layouts.app')
+
+@section('content')
+<div class="max-w-2xl mx-auto bg-white p-4 rounded shadow">
+    <a href="{{ route('admin.dashboard') }}" class="text-blue-500 text-sm">Terug</a>
+
+    <h1 class="text-xl font-bold my-4">Ophalers toewijzen</h1>
+
+    <p class="mb-4">
+        <b>#{{ $melding->id }}</b><br>
+        {{ $melding->straat }} {{ $melding->huisnummer }},
+        {{ $melding->postcode }} Breda<br>
+        {{ Str::limit($melding->omschrijving, 150) }}
+    </p>
+
+    @if($melding->gewicht == 'nee')
+        <p class="bg-red-100 text-red-700 p-2 rounded mb-4">
+            Zware melding - kies liefst 2 ophalers
+        </p>
+    @endif
+
+    @if($vrijeOphalers->count())
+        <form method="POST" action="{{ route('admin.melding.toewijzen', $melding) }}">
+            @csrf
+
+            @foreach($vrijeOphalers as $ophaler)
+                <label class="block border p-2 rounded mb-2">
+                    <input
+                        type="checkbox"
+                        name="ophalers[]"
+                        value="{{ $ophaler->id }}"
+                        @checked($ids->contains($ophaler->id))
+                    >
+                    {{ $ophaler->name }}
+                </label>
+            @endforeach
+
+            @error('ophalers')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+            @enderror
+
+            <button class="bg-green-600 text-white px-4 py-2 rounded">
+                Opslaan
+            </button>
+        </form>
+    @else
+        <p>Geen beschikbare ophalers</p>
+    @endif
+</div>
+@endsection
+
+
+
+public function toewijzenForm(Melding $melding)
+{
+    $ids = $melding->ophalers->pluck('id');
+
+    $vrijeOphalers = User::whereRole('ophaler')
+        ->whereDoesntHave('meldingen', fn($q) => $q->where('status', 'In behandeling'))
+        ->orWhereIn('id', $ids)
+        ->get();
+
+    return view('admin.toewijzen', compact('melding', 'vrijeOphalers', 'ids'));
+}
+
+public function toewijzen(Request $request, Melding $melding)
+{
+    $data = $request->validate([
+        'ophalers' => 'required|array|min:1|max:2',
+        'ophalers.*' => 'exists:users,id'
+    ]);
+
+    foreach (User::whereIn('id', $data['ophalers'])->get() as $ophaler) {
+    $bezet = Melding::whereHas('ophalers', fn($q) => $q->where('users.id', $ophaler->id))
+        ->where('status', 'In behandeling')
+        ->where('id', '!=', $melding->id)
+        ->exists();
+
+    if ($bezet) {
+        return back()->withErrors(['ophalers' => "$ophaler->name is al bezig."]);
     }
+}
+
+    $melding->ophalers()->sync($data['ophalers']);
+    $melding->update(['status' => 'In behandeling']);
+
+    return redirect()->route('admin.dashboard')->with('success', 'Ophalers bijgewerkt.');
+}
