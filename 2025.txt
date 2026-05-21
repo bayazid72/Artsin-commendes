@@ -362,3 +362,15 @@ public function toewijzen(Request $request, Melding $melding)
 
     return redirect()->route('admin.dashboard')->with('success', 'Ophalers bijgewerkt.');
 }
+
+
+
+
+model
+ public function isBezet()
+{
+    return $this->meldingen()
+        ->where('status', 'In behandeling')
+        ->exists();
+}
+
