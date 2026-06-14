@@ -82,5 +82,16 @@ https://www.template.net/
 https://www.photopea.com/
 
 
+1. Initialiseer Git (als dat nog niet is gedaan)
+git init
+2. Voeg alle bestanden toe
+git add .
+3. Maak een eerste commit
+git commit -m "Eerste commit"
+
+4.git remote add origin https://github.com/bayaz/ai-autodokter.git
+5.git branch -M main
+6.git push -u origin main
+
 bootstrap/app.php
 
