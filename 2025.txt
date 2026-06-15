@@ -96,5 +96,33 @@ git commit -m "Eerste commit"
 
 Script @php artisan boost:update --ansi handling the post-update-cmd event returned with error code 1
 
+
+Deze fout komt niet door Breeze zelf, maar door Laravel Boost: Composer probeert na update dit te draaien:
+
+php artisan boost:update --ansi
+
+en dat faalt. Breeze installeer je zo:
+
+composer require laravel/breeze --dev --no-scripts
+php artisan breeze:install
+npm install
+npm run dev
+php artisan migrate
+
+Daarna fix je Boost apart:
+
+composer update laravel/boost --dev
+php artisan boost:install
+
+Als je Boost niet gebruikt, verwijder tijdelijk uit composer.json bij scripts deze regel:
+
+"@php artisan boost:update --ansi"
+
+Daarna:
+
+composer require laravel/breeze --dev
+
+Laravel documenteert Boost-installatie met composer require laravel/boost --dev en daarna php artisan boost:install; Breeze is een aparte starter/auth package.
+
 bootstrap/app.php
 
