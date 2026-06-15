@@ -93,6 +93,10 @@ git commit -m "Eerste commit"
 5.git branch -M main
 6.git push -u origin main
 
+case 'medewerker':
+            return '/medewerkers/zwemlessen';
+
+
 
 Script @php artisan boost:update --ansi handling the post-update-cmd event returned with error code 1
 
