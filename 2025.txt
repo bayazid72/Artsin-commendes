@@ -93,5 +93,8 @@ git commit -m "Eerste commit"
 5.git branch -M main
 6.git push -u origin main
 
+
+Script @php artisan boost:update --ansi handling the post-update-cmd event returned with error code 1
+
 bootstrap/app.php
 
